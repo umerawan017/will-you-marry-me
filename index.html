@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayesha - Will you marry me?</title>
+    <link rel="icon" type="image/x-icon" href="assets/logofav.ico">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: sans-serif;
+            background: rgb(36,6,0);
+            background: linear-gradient(90deg, rgba(36,6,0,1) 0%, rgba(128,8,29,1) 23%, rgba(139,65,180,1) 66%, rgba(121,0,255,1) 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+            flex-direction: column;
+        }
+
+        .container {
+            text-align: center;
+            z-index: 10;
+            padding: 20px;
+        }
+
+        .message {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 150px;
+        }
+
+        .modal-content {
+            text-align: center;
+        }
+
+        .modal-header {
+            border-bottom: none;
+        }
+
+        .modal-body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        footer {
+            background: transparent;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                overflow: hidden;
+            }
+            .message {
+                font-size: 1.5em;
+            }
+            .button {
+                padding: 8px 16px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="text-white" id="marryText">Will you marry me?</h1>
+    <img src="assets/lovewall.jpg" alt="Love Wall" class="img-fluid" id="loveImage"><br>
+    <div class="message">Coded By Umer ❤️ </div>
+    <div class="button-container">
+        <button class="btn btn-success button yes">Yes</button>
+        <button class="btn btn-danger button no">No</button>
+    </div>
+    <audio id="loveSong" src="assets/tjpalagi.mp3" preload="auto"></audio>
+</div>
+
+<div class="modal fade" id="noInspectModal" tabindex="-1" role="dialog" aria-labelledby="noInspectModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h5>No Page Sourcing & Inspect!</h5>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    Created by <a href="https://www.facebook.com/xvennnnnn" target="_blank" style="color: white; text-decoration: underline;">Umer Awan</a>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+const yesButton = document.querySelector('.yes');
+const noButton = document.querySelector('.no');
+const message = document.querySelector('.message');
+const loveImage = document.getElementById('loveImage');
+const loveSong = document.getElementById('loveSong');
+const marryText = document.getElementById('marryText');
+
+const noMessages = [
+    'Sure na gud ka love?',
+    'But why not?',
+    'You must be joking!',
+    'Are you serious?',
+    'Think again!',
+    'Come on, say yes!',
+    'Don\'t be shy!',
+    'You know you want to!',
+    'It\'s a great idea!',
+    'Please consider it!'
+];
+
+let noClickCount = 0;
+
+yesButton.addEventListener('click', () => {
+    marryText.style.display = 'none';
+    yesButton.style.display = 'none'; 
+    noButton.style.display = 'none';
+    message.textContent = 'Yay! I love you!';
+    loveImage.src = 'assets/yes.gif';
+    loveSong.play();
+});
+
+noButton.addEventListener('click', () => {
+    if (loveSong.paused === false) {
+        loveSong.pause();
+    }
+
+    if (noClickCount < 10) {
+        message.textContent = noMessages[noClickCount];
+        noClickCount++;
+        loveImage.src = `assets/sad${Math.min(noClickCount, 10)}.gif`;
+        moveButton();
+    }
+
+    if (noClickCount === 10) {
+        noButton.style.display = 'none';
+        message.textContent = 'You only choice is YES! HAHA.';
+    }
+});
+
+const moveButton = () => {
+    const x = Math.random() * (window.innerWidth - noButton.offsetWidth);
+    const y = Math.random() * (window.innerHeight - noButton.offsetHeight);
+    noButton.style.position = 'absolute';
+    noButton.style.left = `${x}px`;
+    noButton.style.top = `${y}px`;
+};
+
+document.addEventListener('contextmenu', event => {
+    event.preventDefault();
+    $('#noInspectModal').modal('show');
+});
+
+document.addEventListener('keydown', event => {
+    if (event.key === 'F12') {
+        event.preventDefault();
+        $('#noInspectModal').modal('show');
+    }
+});
+</script>
+
+</body>
+</html>
